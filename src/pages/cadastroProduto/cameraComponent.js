@@ -39,7 +39,7 @@ const CameraComponent = ({setFotoCarrega, fotoCarrega}) => {
   };
 
   return (
-    <View style={{ marginTop: 80 }}>
+    <View style={{ marginTop: 0 }}>
         {
             fotoCarrega && (
             <View>

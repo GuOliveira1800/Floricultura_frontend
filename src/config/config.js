@@ -1,3 +1,3 @@
-const Config = "http://192.168.1.31:8080/";
+const Config = "http://26.199.74.95:8080/";
 
 export default Config;

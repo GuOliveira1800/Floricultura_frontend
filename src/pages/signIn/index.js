@@ -11,6 +11,7 @@ import ListaProduto from "../listagemProduto";
 import ListaFornecedor from "../listagemFornecedor";
 import UsuarioTela from "../usuarioTela/usuarioTela";
 import usuarioService from "../../service/signIn/serviceUsuario";
+import CadastroScreen from "../cadastroEntrada/cadastroEntrada";
 
 export default function SignIn(codigoUsu){
   
@@ -20,7 +21,7 @@ export default function SignIn(codigoUsu){
   const [nomeUsuario, setNomeUsuario] = useState("Usuario");
 
   const pegaUsuario = async () => {    
-    if(usuario == null){
+    if(usuario === null){
       const usuarioUnico = await usuarioService.buscaNomeUsuario(codigoUsu.route.params.codigoUsu);
       setUsuario(usuarioUnico);
 
@@ -30,16 +31,17 @@ export default function SignIn(codigoUsu){
 
   pegaUsuario();
 
-  console.log(nomeUsuario)
-
   const Drawer = createDrawerNavigator();
 
     return(
       <Drawer.Navigator>  
         <Drawer.Screen name="Cliente" component={Lista} />        
         <Drawer.Screen name="Produtos" component={ListaProduto} />
-        <Drawer.Screen name="Fornecedor" component={ListaFornecedor} />      
-        <Drawer.Screen name={nomeUsuario} component={UsuarioTela} />
+        <Drawer.Screen name="Fornecedor" component={ListaFornecedor} />
+        
+        <Drawer.Screen name="Entradas" component={CadastroScreen} />
+
+        <Drawer.Screen name={nomeUsuario} component={UsuarioTela} />        
       </Drawer.Navigator>
     );
 }

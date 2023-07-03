@@ -40,6 +40,14 @@ class serviceUsuario{
         return json;
     };
 
+    async getFornecedorPorNome(nome){          
+        const response = await fetch(Config+'fornecedor/listar/filtro/'+nome);
+        const json = await response.json();
+        return json;
+    };
+
+    //http://localhost:8080/fornecedor/listar/filtro/
+
     async getClienteID(codigo){  
         
         const response = await fetch(Config+'cliente/listar/'+codigo);

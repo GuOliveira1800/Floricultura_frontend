@@ -85,7 +85,7 @@ export default function CadastroProduto(props){
                 style={styles.botaoDeletar}
                 onPress={() => deleta()}
                 >
-                    <Text style={styles.textoDeleta} >Deletar</Text>
+                    <Text style={styles.textoDeleta} >DELETAR</Text>
                 </TouchableOpacity>
             )
         }
@@ -98,50 +98,62 @@ export default function CadastroProduto(props){
 
             <View style={styles.containerTexto}>
 
-                <TextInput
-                    style={styles.usuario}
-                    editable
-                    multiline
-                    numberOfLines={1}
-                    maxLength={250}
-                    placeholder="Nome"
-                    id="nome"
-                    onChangeText={value => setNome(value)}
-                    value={nome}
-                />    
-                <TextInput
-                    style={styles.senha}
-                    editable
-                    multiline
-                    numberOfLines={1}
-                    maxLength={14}
-                    placeholder="Drescrição"
-                    id="descricao"
-                    onChangeText={value => setDescricao(value)}
-                    value={descricao}
-                />
-                <TextInput
-                    style={styles.senha}
-                    editable
-                    numberOfLines={1}
-                    maxLength={14}
-                    keyboardType='number-pad'
-                    placeholder="Quantidade"
-                    id="quantidade"
-                    onChangeText={value => setQuantidade(value)}
-                    value={quantidade}
-                />
-                <TextInput
-                    style={styles.senha}
-                    editable
-                    numberOfLines={1}
-                    maxLength={16}
-                    keyboardType='number-pad'
-                    placeholder="Valor Unitario"
-                    id="valorUnitario"
-                    onChangeText={value => setValorUnitario(value)}
-                    value={valorUnitario}
-                />
+                <View style={{flexDirection: "row"}}>
+                    <Text style={styles.label}>Nome:</Text>
+                    <TextInput
+                        style={styles.usuario}
+                        editable
+                        multiline
+                        numberOfLines={1}
+                        maxLength={250}
+                        placeholder="Nome"
+                        id="nome"
+                        onChangeText={value => setNome(value)}
+                        value={nome}
+                    />
+                </View>
+                <View style={{flexDirection: "row"}}>
+                    <Text style={styles.label}>Drescrição:</Text>
+                    <TextInput
+                        style={styles.senha}
+                        editable
+                        multiline
+                        numberOfLines={1}
+                        maxLength={14}
+                        placeholder="Drescrição"
+                        id="descricao"
+                        onChangeText={value => setDescricao(value)}
+                        value={descricao}
+                    />
+                </View>
+                <View style={{flexDirection: "row"}}>
+                    <Text style={styles.label}>Quantidade:</Text>
+                    <TextInput
+                        style={styles.qtd}
+                        editable
+                        numberOfLines={1}
+                        maxLength={14}
+                        keyboardType='number-pad'
+                        placeholder="Quantidade"
+                        id="quantidade"
+                        onChangeText={value => setQuantidade(value)}
+                        value={quantidade}
+                    />
+                </View>
+                <View style={{flexDirection: "row"}}>
+                    <Text style={styles.label}>Valor Unitario:</Text>
+                        <TextInput
+                        style={styles.valuni}
+                        editable
+                        numberOfLines={1}
+                        maxLength={16}
+                        keyboardType='number-pad'
+                        placeholder="Valor Unitario"
+                        id="valorUnitario"
+                        onChangeText={value => setValorUnitario(value)}
+                        value={valorUnitario}
+                    />
+                </View>
                 <Button 
                     title="Cadastrar"
                     style={{
@@ -162,13 +174,33 @@ export default function CadastroProduto(props){
 const styles = StyleSheet.create({
     usuario: {
         fontSize: 20,
-        padding: 10,
-        borderBottomWidth: 1
+        padding: 2,
+        borderBottomWidth: 1,
+        minWidth: 230,
+    },
+    label:{
+        fontSize: 20,
+        marginEnd: 10,
+        marginTop: 3
     },
     senha: {
         fontSize: 20,
-        marginTop: 30,
-        padding: 10,
+        minWidth: 190,        
+        padding: 2,
+        marginBottom: 5,
+        borderBottomWidth: 1
+    },
+    qtd: {
+        fontSize: 20,
+        minWidth: 185,        
+        padding: 2,
+        marginBottom: 5,
+        borderBottomWidth: 1
+    },
+    valuni: {
+        fontSize: 20,
+        minWidth: 165,        
+        padding: 2,
         marginBottom: 15,
         borderBottomWidth: 1
     },
@@ -182,7 +214,7 @@ const styles = StyleSheet.create({
         width: 300
     },
     containerTexto: {
-        width: 300
+        width: 300,
     },
     foto:{
         width: 200,
@@ -195,10 +227,15 @@ const styles = StyleSheet.create({
     },
     botaoDeletar:{
         marginTop: 2,
-        backgroundColor: 'rgb(255,0,0)'
+        backgroundColor: 'rgb(255,0,0)',
+        borderRadius: 2,
+        height: 35,
+        verticalAlign: "middle"
     },
     textoDeleta:{
-        fontSize: 15,
-        textAlign: "center"
+        fontSize: 14,
+        textAlign: "center",
+        color: 'rgb(255,255,255)',
+        marginTop: 6
     }
 })

@@ -36,7 +36,7 @@ export default function ListaFornecedor(){
                         >
                             <Image source={{uri: "data:image/png;base64,"+item.foto_for, scale: 5}} style={{height: 50, width: 50, borderRadius: 15}}/>
                             <ListItem.Content>
-                                <ListItem.Title style={{fontSize: 25}} >{item.nome_for}</ListItem.Title>
+                                <ListItem.Title style={{fontSize: 25}} >{item.nomeFor}</ListItem.Title>
                                 <ListItem.Subtitle>{item.docume_for}</ListItem.Subtitle>                            
                             </ListItem.Content>
                         </ListItem>

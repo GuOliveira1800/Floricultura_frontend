@@ -6,8 +6,7 @@ class serviceProduto{
     async getProduto(){  
         
         const response = await fetch(Config+'produto/listar/1');
-        const json = await response.json();
-        //console.log(json);
+        const json = await response.json();        
         return json;
     };
 
@@ -18,6 +17,16 @@ class serviceProduto{
         
         return json;
     };
+
+    async getProdutoNome(nome){  
+        
+        const response = await fetch(Config+'produto/procura/'+nome);
+        const json = await response.json();
+        
+        return json;
+    };
+
+    //http://localhost:8080/produto/procura/
 
     async deletar(codigo){  
         const response = await fetch(Config+'produto/deletar/'+codigo);

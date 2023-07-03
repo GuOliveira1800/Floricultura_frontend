@@ -6,6 +6,8 @@ import CadastroCliente from '../pages/cadastroCliente';
 import CadastroProduto from '../pages/cadastroProduto';
 import CadastroFornecedor from '../pages/cadastroFornecedor';
 import CadastroUsuario from '../pages/cadastroUsuario/cadastroUsuario';
+import ProdutoPesquisaScreen from '../pages/cadastroEntrada/pesquisaProduto';
+import FornecedorPesquisaScreen from '../pages/cadastroEntrada/pesquisaFornecedor'; 
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +46,16 @@ export default function Routes(){
             <Stack.Screen
             name="CadUsu"
             component={CadastroUsuario}
+            />
+
+            <Stack.Screen
+            name="ProdutoPesquisa"
+            component={ProdutoPesquisaScreen}
+            />
+
+            <Stack.Screen
+            name="FornecedorPesquisa"
+            component={FornecedorPesquisaScreen}
             />
 
         </Stack.Navigator>

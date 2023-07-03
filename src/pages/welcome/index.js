@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import { Button,TouchableOpacity } from "react-native";
 import { View, Text, Image, StyleSheet, TextInput } from "react-native";
 import usuarioService from "../../service/signIn/serviceUsuario";
+import { CheckBox } from "react-native-elements";
 
 export default function Welcome(){
 
     const [usuario, setUsuario] = useState(null);
     const [senha, setSenha] = useState(null);
+    const [aparece, setAparece] = useState(true);
 
     const navigation = useNavigation();
     
@@ -56,15 +58,17 @@ export default function Welcome(){
                 />
                 <TextInput
                     style={styles.senha}
-                    editable
-                    multiline
-                    numberOfLines={1}
-                    maxLength={50}
+                    editable                    
                     placeholder="senha"
-                    id="senha"
+                    secureTextEntry={aparece}                    
                     value={senha}
                     onChangeText={value => setSenha(value)}
                 />
+                <View style={{alignItems: 'flex-start', justifyContent: 'flex-start', alignSelf: 'flex-start'}} >
+                    <CheckBox title={"Mostra senha"} onPress={() => {
+                        setAparece(!aparece);
+                    }} checked={!aparece} />
+                </View>
                 <Button 
                     title="Entrar"
                     style={styles.botao}

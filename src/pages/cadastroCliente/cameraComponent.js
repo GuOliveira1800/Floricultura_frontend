@@ -39,15 +39,15 @@ const CameraComponent = ({setFotoCarrega, fotoCarrega}) => {
   };
 
   return (
-    <View style={{ marginTop: 80 }}>
+    <View style={{alignContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
         {
             fotoCarrega && (
             <View>
-                <Image source={{ uri: "data:image/png;base64,"+fotoCarrega }} style={{width:200, height: 200}} />          
+                <Image source={{ uri: "data:image/png;base64,"+fotoCarrega }} style={{width:150, height: 150}} />          
             </View>
             )
         }
-        <TouchableOpacity onPress={handleCapture}>
+        <TouchableOpacity onPress={handleCapture} style={{alignContent: 'center'}}>
             <Text>Capturar Imagem</Text>
         </TouchableOpacity>
     </View>
