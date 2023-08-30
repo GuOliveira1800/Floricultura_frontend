@@ -1,82 +1,74 @@
-import axios from "axios";
 import Config from "../../config/config";
 import api from '../../../api';
-import React from "react";
 
 class serviceUsuario{
 
-    async login(data){
-        
-        console.log(data);
-        
+    async login(data){        
         return api.post("/usuario/logar",data)
-        .then((response) => {
-            console.log(response.data);
+        .then((response) => {            
             const retorno = {
-                codigo: response.data,
+                codigo: response.data.codigo_usu,
                 httpStatus: response.status
             }
+            console.log(retorno);
             return retorno;
-        }).catch((error) => {
+        }).catch((error) => {            
             const retorno = {
                 codigo: 0,
-                httpStatus: response.status
+                httpStatus: 400
             }
-            return error.status;
+            return retorno;
         });        
     };
 
+    async request(endPoint){
+        try{
+            const response = await fetch(Config+endPoint);
+            const json = await response.json();   
+            //console.log(json);     
+            return json;
+        } catch (error) {
+            console.error('Erro:', error);
+        }
+    }
+
     async getCliente(){  
-        
-        const response = await fetch(Config+'cliente/listar');
-        const json = await response.json();
-        return json;
+        return await this.request('cliente/listar');
     };
 
     async getFornecedor(){  
-        
-        const response = await fetch(Config+'fornecedor/listar');
-        const json = await response.json();
-        return json;
+        return await this.request('fornecedor/listar');
     };
 
     async getFornecedorPorNome(nome){          
-        const response = await fetch(Config+'fornecedor/listar/filtro/'+nome);
-        const json = await response.json();
-        return json;
+        return await this.request('fornecedor/listar/filtro/'+nome);
     };
 
-    //http://localhost:8080/fornecedor/listar/filtro/
-
     async getClienteID(codigo){  
-        
-        const response = await fetch(Config+'cliente/listar/'+codigo);
-        const json = await response.json();
-        //console.log(json);
-        return json;
+        return await this.request('cliente/listar/'+codigo);
     };
 
     async getFornecedorID(codigo){  
-        
-        const response = await fetch(Config+'fornecedor/listar/'+codigo);
-        const json = await response.json();
-        //console.log(json);
-        return json;
+        return await this.request('fornecedor/listar/'+codigo);
     };
 
-    async deletar(codigo){  
-        
-        const response = await fetch(Config+'cliente/deletar/'+codigo);
+    async deletar(codigo){          
+        try{
+            const response = await fetch(Config+'cliente/deletar/'+codigo);
+        } catch(error){
+            console.log(error)
+        }
     };
 
     async deletarFornecedor(codigo){  
-        
-        const response = await fetch(Config+'fornecedor/deletar/'+codigo);
+        try{
+            const response = await fetch(Config+'fornecedor/deletar/'+codigo);
+        } catch(error){
+            console.log(error)
+        }        
     };
 
-    async criarCliente(data){
-        console.log(data);
-        
+    async criarCliente(data){        
         return api.post("/cliente/inserir",data)
         .then((response) => {
             return response.status;
@@ -86,8 +78,6 @@ class serviceUsuario{
     }
 
     async criarFornecedor(data){
-        console.log(data);
-        
         return api.post("/fornecedor/salvar",data)
         .then((response) => {
             return response.status;
@@ -96,9 +86,7 @@ class serviceUsuario{
         }); 
     }
 
-    async criaUsuario(data){
-        console.log(data);
-        
+    async criaUsuario(data){        
         return api.post("/usuario/salvar",data)
         .then((response) => {
             return response.status;
@@ -108,10 +96,7 @@ class serviceUsuario{
     }
 
     async buscaNomeUsuario(codigo){          
-        const response = await fetch(Config+'usuario/pegar/'+codigo);
-        const json = await response.json();
-        //console.log(json);
-        return json;
+        return await this.request('usuario/pegar/'+codigo);
     };
 
 }

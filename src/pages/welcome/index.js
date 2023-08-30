@@ -22,7 +22,7 @@ export default function Welcome(){
         }
         
         const status = await usuarioService.login(data);
-        console.log(status.httpStatus)
+        console.log(status)
         if (status.httpStatus == 200){
 
             setSenha("");
@@ -65,7 +65,7 @@ export default function Welcome(){
                     onChangeText={value => setSenha(value)}
                 />
                 <View style={{alignItems: 'flex-start', justifyContent: 'flex-start', alignSelf: 'flex-start'}} >
-                    <CheckBox title={"Mostra senha"} onPress={() => {
+                    <CheckBox containerStyle ={{backgroundColor: 'transparent', borderWidth: 0}} title={"Mostra senha"} onPress={() => {
                         setAparece(!aparece);
                     }} checked={!aparece} />
                 </View>

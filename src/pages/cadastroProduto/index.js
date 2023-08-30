@@ -7,7 +7,7 @@ import CameraComponent from "./cameraComponent";
 import { binary } from "./cameraComponent";
 
 
-export default function CadastroProduto(props){
+export default function CadastroProduto({ navigation, route }){
 
     const [codigo, setCodigo] = useState(null);
 
@@ -16,27 +16,24 @@ export default function CadastroProduto(props){
     const [quantidade, setQuantidade] = useState(null);
     const [valorUnitario, setValorUnitario] = useState(null);
     
-
-    const navigation = useNavigation();
-
     const [foto, setFoto] = useState(null);
     const setaImg = (item) =>{
         setFoto(item);
     }
 
     const pegar = async () => {
-
-        if(props.route.params.id !== 0 && codigo == null){
-            const todoClientes = await produtoService.getClienteID(props.route.params.id);
+        
+        if(route.params.idProduto != 0 && codigo == null){
+            const todoClientes = await produtoService.getClienteID(route.params.idProduto);
             
-            setCodigo(String(props.route.params.id));
+            setCodigo(String(route.params.idProduto));
             setNome(todoClientes.nome_prd);
             setDescricao(todoClientes.descri_prd);
             setQuantidade(String(todoClientes.qtd_prd));
             setValorUnitario(String(todoClientes.valuni_prd));
             setFoto(todoClientes.foto_prd);
             
-            props.route.params.id = 0;
+            route.params.idProduto = 0;
         }
     }
 
@@ -65,17 +62,15 @@ export default function CadastroProduto(props){
         }
 
         const status = await produtoService.criarProduto(data);
-        
-        navigation.navigate('SignIn');
+        route.params.onProdutoCadastrado( await produtoService.getProduto());  
+        navigation.goBack();
         
     }
 
     const deleta = async () => {
-
-        const status = await produtoService.deletar(codigo);
-        
-        navigation.navigate('SignIn',{'atualizar': true});
-        
+        const status = await produtoService.deletar(codigo);   
+        route.params.onProdutoCadastrado( await produtoService.getProduto());     
+        navigation.goBack();        
     }
 
     function exibirDeleta (){

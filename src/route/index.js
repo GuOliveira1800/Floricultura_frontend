@@ -8,6 +8,7 @@ import CadastroFornecedor from '../pages/cadastroFornecedor';
 import CadastroUsuario from '../pages/cadastroUsuario/cadastroUsuario';
 import ProdutoPesquisaScreen from '../pages/cadastroEntrada/pesquisaProduto';
 import FornecedorPesquisaScreen from '../pages/cadastroEntrada/pesquisaFornecedor'; 
+import ProdutoPesquisaOrcamentoScreen from '../pages/orcamento/pesquisaProduto';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,11 @@ export default function Routes(){
             name="ProdutoPesquisa"
             component={ProdutoPesquisaScreen}
             />
+
+            <Stack.Screen
+            name="ProdutoPesquisaOrcamento"
+            component={ProdutoPesquisaOrcamentoScreen}
+            />            
 
             <Stack.Screen
             name="FornecedorPesquisa"

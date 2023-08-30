@@ -11,7 +11,7 @@ import { CheckBox } from "react-native-elements";
 import { TouchableOpacity } from "react-native";
 import { Text } from "react-native";
 
-export default function CadastroCliente(props){
+export default function CadastroCliente({ navigation, route }){
 
     const [codigo, setCodigo] = useState(null);
 
@@ -19,9 +19,7 @@ export default function CadastroCliente(props){
     const [documento, setDocumento] = useState(null);
     const [cep, setCep] = useState(null);
     const [telefone, setTelefone] = useState(null);
-
     const [foto, setFoto] = useState(null);
-
     const setaImg = (item) =>{
         setFoto(item);
     }
@@ -40,24 +38,16 @@ export default function CadastroCliente(props){
         
     };
 
-    const [todos, setTodos] = useState(null);
-    const navigation = useNavigation();
+    const pegar = async () => {        
+        if(route.params.idCliente != 0 && codigo == null){
+            const todoClientes = await usuarioService.getClienteID(route.params.idCliente);
 
-    const pegar = async () => {
-        console.log(props.route.params.id);
-        if(props.route.params.id != 0 && codigo == null){
-
-        const todoClientes = await usuarioService.getClienteID(props.route.params.id);
-
-        setCodigo(String(props.route.params.id));
-        setNome(todoClientes.nome_cli);
-        setTelefone(todoClientes.telefo_cli);
-        setDocumento(todoClientes.docume_cli);
-        setCep(todoClientes.codend_cli.cep_end);
-        setFoto(todoClientes.foto_cli);
-
-        props.route.params.id = 0;
-
+            setCodigo(String(route.params.idCliente));
+            setNome(todoClientes.nome_cli);
+            setTelefone(todoClientes.telefo_cli);
+            setDocumento(todoClientes.docume_cli);
+            setCep(todoClientes.codend_cli.cep_end);
+            setFoto(todoClientes.foto_cli);
         }
     }
 
@@ -86,17 +76,14 @@ export default function CadastroCliente(props){
         }
 
         const status = await usuarioService.criarCliente(data);
-        
-        navigation.navigate('SignIn',{'atualizar': true});
-        
+        route.params.onClienteCadastrado( await usuarioService.getCliente());
+        navigation.goBack();        
     }
 
     const deleta = async () => {
-
         const status = await usuarioService.deletar(codigo);
-        
-        navigation.navigate('SignIn',{'atualizar': true});
-        
+        route.params.onClienteCadastrado( await usuarioService.getCliente());
+        navigation.goBack();        
     }
 
     function exibirDeleta (){
@@ -147,7 +134,7 @@ export default function CadastroCliente(props){
                         value={documento}
                     />
                 </View>
-                <CheckBox title={"É cnpj ?"} checked={isCnpj} onPress={setarMaskDoc}/>
+                <CheckBox title={"É cnpj ?"} containerStyle ={{backgroundColor: 'transparent', borderWidth: 0}} checked={isCnpj} onPress={setarMaskDoc}/>
                 <View style={{flexDirection: "row"}}>
                     <Text style={styles.label}>Cep:</Text>
                     <TextInput

@@ -3,33 +3,34 @@ import api from "../../../api";
 
 class serviceProduto{
 
-    async getProduto(){  
-        
-        const response = await fetch(Config+'produto/listar/1');
-        const json = await response.json();        
-        return json;
+    async request(endPoint){
+        try{
+            const response = await fetch(Config+endPoint);
+            const json = await response.json();        
+            return json;
+        } catch (error) {
+            console.error('Erro:', error);
+        }
+    }
+
+    async getProduto(){          
+        return await this.request('produto/listar/1');
     };
 
     async getClienteID(codigo){  
-        
-        const response = await fetch(Config+'produto/listar/unico/'+codigo);
-        const json = await response.json();
-        
-        return json;
+        return await this.request('produto/listar/unico/'+codigo);
     };
 
     async getProdutoNome(nome){  
-        
-        const response = await fetch(Config+'produto/procura/'+nome);
-        const json = await response.json();
-        
-        return json;
+        return await this.request('produto/procura/'+nome);
     };
 
-    //http://localhost:8080/produto/procura/
-
     async deletar(codigo){  
-        const response = await fetch(Config+'produto/deletar/'+codigo);
+        try{
+            const response = await fetch(Config+'produto/deletar/'+codigo);
+        }catch(error){
+            console.log(error);
+        }
     };
 
     async criarProduto(data){
@@ -39,10 +40,9 @@ class serviceProduto{
         .then((response) => {
             return response.status;
         }).catch((error) => {
-            return error.status;
+            console.log(error);
         }); 
     }
-
 }
 
 const produtoService = new serviceProduto();
