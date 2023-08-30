@@ -12,13 +12,17 @@ export default function ListaFornecedor(){
     const navigation = useNavigation();
 
     const pegar = async () => {
-
-        const todos = await usuarioService.getFornecedor();
-
-        setTodos(todos);        
+        if(todos === null){
+            const todos = await usuarioService.getFornecedor();
+            setTodos(todos);  
+        }
     }
 
     pegar();
+
+    const HandleFornecedorCadastrado = (fornecedor) => {        
+        setTodos(fornecedor);        
+    };
     
     return(
         
@@ -29,9 +33,8 @@ export default function ListaFornecedor(){
                     renderItem={({item}) => 
                         <ListItem
                             bottomDivider
-                            onPress={() =>{
-                                setTodos(null);
-                                navigation.navigate('CadFor',{id: item.codigo_for})
+                            onPress={() =>{                                
+                                navigation.navigate('CadFor',{idFornecedor: item.codigo_for, onFornecedorCadastrado: HandleFornecedorCadastrado});
                             }}
                         >
                             <Image source={{uri: "data:image/png;base64,"+item.foto_for, scale: 5}} style={{height: 50, width: 50, borderRadius: 15}}/>
@@ -45,9 +48,8 @@ export default function ListaFornecedor(){
                 <FAB 
                     icon={{ name: 'add', color: 'white' }}
                     style={styles.botaoFAB}
-                    onPress={() =>{
-                        navigation.navigate('CadFor',{id: 0});
-                        setTodos(null);
+                    onPress={() =>{                        
+                        navigation.navigate('CadFor',{idFornecedor: 0, onFornecedorCadastrado: HandleFornecedorCadastrado});
                     }}
                 />
             </View>

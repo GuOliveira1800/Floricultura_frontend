@@ -62,7 +62,7 @@ const CadastroTela = () => {
         onChangeText={text => setSenha(text)}
       />
       <View style={{alignItems: 'flex-start', justifyContent: 'flex-start', alignSelf: 'flex-start'}} >
-        <CheckBox title={"Mostra senha"} onPress={() => {
+        <CheckBox title={"Mostra senha"} containerStyle ={{backgroundColor: 'transparent', borderWidth: 0}} onPress={() => {
             setAparece(!aparece);
         }} checked={!aparece} />
       </View>

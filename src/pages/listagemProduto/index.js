@@ -13,13 +13,17 @@ export default function ListaProduto(){
     const navigation = useNavigation();
 
     const pegar = async () => {
-        
-        const todoClientes = await produtoService.getProduto();
-
-        setTodos(todoClientes);        
+        if(todos === null){
+            const todoClientes = await produtoService.getProduto();
+            setTodos(todoClientes); 
+        }
     }
 
     pegar();
+
+    const HandleProdutoCadastrado = (produto) => {        
+        setTodos(produto);        
+    };
 
     return(
         
@@ -31,7 +35,7 @@ export default function ListaProduto(){
                         <ListItem
                             bottomDivider
                             onPress={() =>{
-                                navigation.navigate('CadPrd',{id: item.id})
+                                navigation.navigate('CadPrd',{idProduto: item.id, onProdutoCadastrado: HandleProdutoCadastrado});
                             }}
                         >
                             <Image source={{uri: "data:image/png;base64,"+item.foto_prd, scale: 5}} style={{height: 50, width: 50, borderRadius: 15}}/>
@@ -46,7 +50,7 @@ export default function ListaProduto(){
                     icon={{ name: 'add', color: 'white' }}
                     style={styles.botaoFAB}
                     onPress={() =>{
-                        navigation.navigate('CadPrd',{id: 0})
+                        navigation.navigate('CadPrd',{idProduto: 0, onProdutoCadastrado: HandleProdutoCadastrado});
                     }}
                 />
             </View>

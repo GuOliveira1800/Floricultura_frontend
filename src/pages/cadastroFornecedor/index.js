@@ -11,7 +11,7 @@ import { CheckBox } from "react-native-elements";
 import { TouchableOpacity } from "react-native";
 import { Text } from "react-native";
 
-export default function CadastroFornecedor(props){
+export default function CadastroFornecedor({ navigation, route }){
 
     const [codigo, setCodigo] = useState(null);
 
@@ -40,25 +40,19 @@ export default function CadastroFornecedor(props){
         setFoto(item);
     }
 
-    const [todos, setTodos] = useState(null);
-    const navigation = useNavigation();
-
     const pegar = async () => {
-        console.log(props.route.params.id);
-        if(props.route.params.id != 0 && codigo == null){
-
-        const fornecedor = await usuarioService.getFornecedorID(props.route.params.id);
         
-        setCodigo(String(props.route.params.id));
-        setNome(fornecedor.nomeFor);
-        setTelefone(fornecedor.telefo_for);
-        console.log(fornecedor.docume_for);
-        setDocumento(fornecedor.docume_for);
-        setCep(fornecedor.codend_for.cep_end);
-        setFoto(fornecedor.foto_for);
+        if(route.params.idFornecedor != 0 && codigo == null){
+            const fornecedor = await usuarioService.getFornecedorID(route.params.idFornecedor);
+            
+            setCodigo(String(route.params.idFornecedor));
+            setNome(fornecedor.nomeFor);
+            setTelefone(fornecedor.telefo_for);        
+            setDocumento(fornecedor.docume_for);
+            setCep(fornecedor.codend_for.cep_end);
+            setFoto(fornecedor.foto_for);
 
-        props.route.params.id = 0;
-
+            route.params.idFornecedor = 0;
         }
     }
 
@@ -87,18 +81,16 @@ export default function CadastroFornecedor(props){
         }
 
         const status = await usuarioService.criarFornecedor(data);
+        route.params.onFornecedorCadastrado( await usuarioService.getFornecedor());
         
-        
-        navigation.navigate('SignIn',{'atualizar': true});
+        navigation.goBack();
         
     }
 
     const deleta = async () => {
-
-        const status = await usuarioService.deletarFornecedor(codigo);
-        
-        navigation.navigate('SignIn',{'atualizar': true});
-        
+        const status = await usuarioService.deletarFornecedor(codigo);      
+        route.params.onFornecedorCadastrado( await usuarioService.getFornecedor());  
+        navigation.goBack();        
     }
 
     function exibirDeleta (){
@@ -149,7 +141,7 @@ export default function CadastroFornecedor(props){
                         value={documento}
                     />
                 </View>
-                <CheckBox title={"É cnpj ?"} checked={isCnpj} onPress={setarMaskDoc}/>
+                <CheckBox title={"É cnpj ?"} containerStyle ={{backgroundColor: 'transparent', borderWidth: 0}} checked={isCnpj} onPress={setarMaskDoc}/>
                 <View style={{flexDirection: "row"}}>
                     <Text style={styles.label}>Cep:</Text>
                     <TextInput

@@ -22,6 +22,7 @@ export default function CadastroScreen ({ navigation, route }) {
   };
 
   const handleProdutoSelecionado = (produto) => {
+    console.log(produto);
     setProduto(produto);
     setNomeProduto(produto.nome_prd);
   };

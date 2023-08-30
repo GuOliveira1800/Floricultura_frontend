@@ -12,11 +12,15 @@ export default function Lista(){
     const navigation = useNavigation();
 
     const pegar = async () => {
-
-        const todoClientes = await usuarioService.getCliente();
-
-        setTodos(todoClientes);        
+        if (todos === null){
+            const todoClientes = await usuarioService.getCliente();
+            setTodos(todoClientes);        
+        }
     }
+
+    const HandleClienteCadastrado = (clientes) => {        
+        setTodos(clientes);        
+    };
 
     pegar();
     
@@ -29,9 +33,8 @@ export default function Lista(){
                     renderItem={({item}) => 
                         <ListItem
                             bottomDivider
-                            onPress={() =>{
-                                setTodos(null);
-                                navigation.navigate('CadCli',{id: item.codigo_usu})
+                            onPress={() =>{                                                                
+                                navigation.navigate('CadCli',{idCliente: item.codigo_usu, onClienteCadastrado: HandleClienteCadastrado});
                             }}
                         >
                             <Image source={{uri: "data:image/png;base64,"+item.foto_cli, scale: 5}} style={{height: 50, width: 50, borderRadius: 15}}/>
@@ -46,8 +49,7 @@ export default function Lista(){
                     icon={{ name: 'add', color: 'white' }}
                     style={styles.botaoFAB}
                     onPress={() =>{
-                        navigation.navigate('CadCli',{id: 0});
-                        setTodos(null);
+                        navigation.navigate('CadCli',{idCliente: 0, onClienteCadastrado: HandleClienteCadastrado});                        
                     }}
                 />
             </View>

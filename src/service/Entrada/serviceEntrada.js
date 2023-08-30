@@ -9,7 +9,7 @@ class serviceEntrada{
         .then((response) => {
             return response.status;
         }).catch((error) => {
-            return error.status;
+            console.log(error);
         }); 
     }
 
