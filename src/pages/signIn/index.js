@@ -13,6 +13,7 @@ import UsuarioTela from "../usuarioTela/usuarioTela";
 import usuarioService from "../../service/signIn/serviceUsuario";
 import CadastroScreen from "../cadastroEntrada/cadastroEntrada";
 import Orcamento from "../orcamento";
+import ListaPedido from "../orcamento/listagemPedido";
 
 export default function SignIn(codigoUsu){
   
@@ -27,7 +28,7 @@ export default function SignIn(codigoUsu){
       setUsuario(usuarioUnico);
 
       setNomeUsuario(usuarioUnico.nome_usu);
-    }
+    }    
   } 
 
   pegaUsuario();
@@ -36,11 +37,11 @@ export default function SignIn(codigoUsu){
 
     return(
       <Drawer.Navigator>  
-        <Drawer.Screen name="Cliente" component={Lista} />        
+        <Drawer.Screen name="Cliente" component={Lista} initialParams={ {CliqueAtualizar : true}} />        
         <Drawer.Screen name="Produtos" component={ListaProduto} />
         <Drawer.Screen name="Fornecedor" component={ListaFornecedor} />                
         <Drawer.Screen name="Entradas" component={CadastroScreen} />
-        <Drawer.Screen name="Criar Orçamento" component={Orcamento} />
+        <Drawer.Screen name="Criar Pedido" component={ListaPedido} />
         <Drawer.Screen name={nomeUsuario} component={UsuarioTela} />        
       </Drawer.Navigator>
     );

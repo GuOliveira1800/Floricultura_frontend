@@ -17,7 +17,6 @@ const CameraComponent = ({setFotoCarrega, fotoCarrega}) => {
 
   const getCameraPermissions = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    const { statusa } = await ImagePicker.getCameraPermissionsAsync();
 
     if (status !== 'granted') {
       console.log('Permissão da câmera negada!');

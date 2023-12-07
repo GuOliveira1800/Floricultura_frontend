@@ -1,29 +1,35 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet,FlatList } from "react-native";
 import { Avatar, FAB,Image,ListItem } from 'react-native-elements';
 import usuarioService from "../../service/signIn/serviceUsuario";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 
-export default function Lista(){
+export default function Lista({ navigation, route }){
 
-    const [todos, setTodos] = useState(null);    
-    const navigation = useNavigation();
-
-    const pegar = async () => {
-        if (todos === null){
-            const todoClientes = await usuarioService.getCliente();
-            setTodos(todoClientes);        
-        }
-    }
+    const [todos, setTodos] = useState(null);        
 
     const HandleClienteCadastrado = (clientes) => {        
         setTodos(clientes);        
     };
 
-    pegar();
-    
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const lista = await usuarioService.getCliente();
+            setTodos(lista);
+          } catch (error) {
+            console.error('Erro ao obter dados do serviço:', error);
+          }
+        };
+      
+        fetchData(); // Chama a função assíncrona imediatamente
+      
+        // Por exemplo, você pode recarregar dados ou fazer outras operações aqui
+      }, [route.params]);
+
+
     return(
         
             <View>

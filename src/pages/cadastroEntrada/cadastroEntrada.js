@@ -93,8 +93,7 @@ export default function CadastroScreen ({ navigation, route }) {
                 marginStart: 2,
                 color: 'rgb(0,0,0)'
             }}            
-        />
-        
+      />        
       </View>
       <View style={{flexDirection: 'row', padding: 3}}>
         <Text

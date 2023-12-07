@@ -44,6 +44,10 @@ class serviceUsuario{
         return await this.request('fornecedor/listar/filtro/'+nome);
     };
 
+    async getClientePorNome(nome){          
+        return await this.request('cliente/listar/nome/'+nome);
+    };
+
     async getClienteID(codigo){  
         return await this.request('cliente/listar/'+codigo);
     };

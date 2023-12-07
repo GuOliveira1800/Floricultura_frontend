@@ -2,28 +2,28 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, FlatList, Text, TouchableOpacity } from 'react-native';
 import usuarioService from "../../service/signIn/serviceUsuario";
 
-export default function FornecedorPesquisaScreen ({ navigation, route }) {
+export default function ClientePesquisaScreen ({ navigation, route }) {
   const [pesquisa, setPesquisa] = useState('');
-  const [fornecedor, setProdutos] = useState(null);
+  const [cliente, setCliente] = useState(null);
 
-  const handlePesquisar = async () => {
-    const lista = await usuarioService.getFornecedorPorNome(pesquisa);
+    const handlePesquisar = async () => {
+        const lista = await usuarioService.getClientePorNome(pesquisa);
 
-    setProdutos(lista);
-  };
+        setProdutos(lista);
+    };
 
-  const pegar = async () => {
-        if(!fornecedor){
-            const todos = await usuarioService.getFornecedor();
-            setProdutos(todos); 
+    const pegar = async () => {
+        if(!cliente){
+            const todos = await usuarioService.getCliente();
+            setCliente(todos); 
         }       
     }
 
-pegar();
+    pegar();
 
-  const handleProdutoSelecionado = (produtoId) => {
+    const handleProdutoSelecionado = (cliente) => {
     
-    route.params.onProdutoSelecionado(produtoId);
+    route.params.onProdutoSelecionado(cliente);
     navigation.goBack();
   };
 
@@ -32,7 +32,7 @@ pegar();
         style={{marginTop: 50}}
     >
       <TextInput
-        placeholder="Pesquisar Fornecedor"
+        placeholder="Pesquisar Cliente"
         value={pesquisa}
         onChangeText={setPesquisa}
         style={{
@@ -42,8 +42,8 @@ pegar();
       <Button title="Pesquisar" onPress={handlePesquisar} />
 
       <FlatList
-        data={fornecedor}
-        keyExtractor={(item) => item.codigo_for.toString()}
+        data={cliente}
+        keyExtractor={(item) => item.codigo_usu.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleProdutoSelecionado(item)}>
             <Text style={{
@@ -51,7 +51,7 @@ pegar();
                 padding: 5,
                 borderBottomColor: 'rgb(0,0,0)',
                 borderBottomWidth: 1
-            }}>{item.nomeFor}</Text>
+            }}>{item.nome_cli}</Text>
           </TouchableOpacity>
         )}
       />

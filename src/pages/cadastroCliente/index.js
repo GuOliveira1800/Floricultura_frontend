@@ -89,12 +89,15 @@ export default function CadastroCliente({ navigation, route }){
     function exibirDeleta (){
         if(codigo){
             return(
-                <TouchableOpacity 
-                style={styles.botaoDeletar}
-                onPress={() => deleta()}
-                >
-                    <Text style={styles.textoDeleta} >DELETAR</Text>
-                </TouchableOpacity>
+                <View>
+                    <TouchableOpacity 
+                    style={styles.botaoDeletar}
+                    onPress={() => deleta()}
+                    >
+                        <Text style={styles.textoDeleta} >DELETAR</Text>
+                    </TouchableOpacity>
+                    
+                </View>                
             )
         }
     }
@@ -229,7 +232,14 @@ const styles = StyleSheet.create({
     },    
     botaoDeletar:{
         marginTop: 2,
-        backgroundColor: 'rgb(255,0,0)',
+        backgroundColor: 'rgb(150,0,0)',
+        borderRadius: 2,
+        height: 35,
+        verticalAlign: "middle"
+    },
+    botaoOrcamento:{
+        marginTop: 2,
+        backgroundColor: 'rgb(0,100,0)',
         borderRadius: 2,
         height: 35,
         verticalAlign: "middle"
