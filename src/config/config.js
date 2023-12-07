@@ -1,3 +1,3 @@
-const Config = "http://26.199.74.95:8080/";
+const Config = "https://backend-production-c547.up.railway.app/floricultura/";
 
 export default Config;

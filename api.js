@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://26.199.74.95:8080/'
+    baseURL: 'https://backend-production-c547.up.railway.app/floricultura/'
 })
 
 export default api;
