@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { View, StyleSheet,FlatList } from "react-native";
 import { FAB,Image,ListItem } from 'react-native-elements';
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -7,19 +7,24 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import pedidoService from '../../service/pedido/servicePedido';
 
 
-export default function ListaPedido(){
+export default function ListaPedido({ navigation, route }){
 
     const [todos, setTodos] = useState(null);
-    const navigation = useNavigation();
 
-    const pegar = async () => {
-        if(todos === null){
-            const todoClientes = await pedidoService.getPedido();
-            setTodos(todoClientes); 
-        }
-    }
-
-    pegar();
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const todosPedido = await pedidoService.getPedido();
+            setTodos(todosPedido); 
+          } catch (error) {
+            console.error('Erro ao obter dados do serviço:', error);
+          }
+        };
+      
+        fetchData(); // Chama a função assíncrona imediatamente
+      
+        // Por exemplo, você pode recarregar dados ou fazer outras operações aqui
+      },  [route.params]);
 
     const HandleProdutoCadastrado = (produto) => {        
         setTodos(produto);        
@@ -49,7 +54,7 @@ export default function ListaPedido(){
                     icon={{ name: 'add', color: 'white' }}
                     style={styles.botaoFAB}
                     onPress={() =>{
-                        navigation.navigate('CadPrd',{idProduto: 0, onProdutoCadastrado: HandleProdutoCadastrado});
+                        navigation.navigate('CadOrc',{idPedido: 0});
                     }}
                 />
             </View>                    

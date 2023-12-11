@@ -81,34 +81,67 @@ export default function CadastroOrcamento({ navigation, route }){
     };
 
     const salvar = () => {
+
         if (codigo !== null){
             itemsDelete.map(produto => {
                 pedidoService.request("pedido/remover/"+codigo+"/"+produto.id);
             })
+            
         }
-
+       
         let quantidadeTotal = items.reduce((accumulator, product) => accumulator +product.qtd_prd, 0);
         
-        pedido.codigoPedido.id = codigo;
-        pedido.codigoPedido.codigoCliente = {
-            "codigo_usu": cliente.codigo_cli,
-            "nome_cli" : cliente.nome_cli,
-            "docume_cli" : cliente.docume_cli,
-            "telefo_cli" : cliente.telefo_cli,
-            "foto_cli" : cliente.foto_cli,
-            "codend_cli" : cliente.codend_cli
+
+
+        if (codigo === null){
+
+            let ped = {
+                codigoPedido :  {
+                    codigoCliente : null
+                }
+            };
+
+            ped.codigoPedido.codigoCliente = {
+                "codigo_usu": cliente.codigo_cli,
+                "nome_cli" : cliente.nome_cli,
+                "docume_cli" : cliente.docume_cli,
+                "telefo_cli" : cliente.telefo_cli,
+                "foto_cli" : cliente.foto_cli,
+                "codend_cli" : cliente.codend_cli
+            }
+
+            const data = {
+                "valorTotal": valorTotal,
+                "quantidadeProduto" : quantidadeTotal,
+                "codigoPedido": ped,
+                "codigoProduto" : items
+            };
+
+            pedidoService.criarPedido(data);
+            navigation.goBack();
+        }else{
+
+            console.log(pedido);
+            pedido.codigoPedido.id = codigo;
+
+            pedido.codigoPedido.codigoCliente = {
+                "codigo_usu": cliente.codigo_cli,
+                "nome_cli" : cliente.nome_cli,
+                "docume_cli" : cliente.docume_cli,
+                "telefo_cli" : cliente.telefo_cli,
+                "foto_cli" : cliente.foto_cli,
+                "codend_cli" : cliente.codend_cli
+            }
+            const data = {
+                "valorTotal": valorTotal,
+                "quantidadeProduto" : quantidadeTotal,
+                "codigoPedido": pedido.codigoPedido,
+                "codigoProduto" : items
+            };
+
+            pedidoService.criarPedido(data);
+            navigation.goBack();
         }
-
-        const data = {
-            "valorTotal": valorTotal,
-            "quantidadeProduto" : quantidadeTotal,
-            "codigoPedido": pedido.codigoPedido,
-            "codigoProduto" : items
-        };
-
-
-        pedidoService.criarPedido(data);
-        navigation.goBack();
     }
 
     const abrirWhatsApp = () => {
